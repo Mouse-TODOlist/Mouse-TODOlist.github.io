@@ -29,18 +29,13 @@ window.onload = () => {
         reset();
         seve();
     }
-    (async () => {
-    await load();
-    await drawing();
-
-    const selectElement = document.getElementById('select_search');
+    load();
+    drawing();
+    const selectElemaent =document.getElementById('select_search');
+    selectElemaent.selectedIndex = 0;
+    const selectElement = document.querySelector('select');
     selectElement.selectedIndex = 0;
-
-    const selectElementQuery = document.querySelector('select');
-    selectElementQuery.selectedIndex = 0;
-
-    await drawing();
-
+    drawing();
     setInterval(() => {
         time_drawing();
     }, 1000);
@@ -51,7 +46,6 @@ window.onload = () => {
     document.getElementById('sort').addEventListener("change",function(){drawing();});
     document.getElementById('search').addEventListener("change",function(){drawing();});
     document.getElementById('select_search').addEventListener("change",function(){drawing();});
-})();
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('js/sw.js').then(() => {
             console.log('Service Worker登録成功チュー！');
@@ -87,37 +81,43 @@ function seve() {
       });
 }
 
-async function load() {
-    try {
-        const userInfo = await getLoggedInUser();
-        let seve;
-
+function load() {
+    getLoggedInUser().then(userInfo => {
         if (userInfo) {
-            const userData = await getUserData(userInfo.id);
-            seve = JSON.parse(userData.data);
+            getUserData(userInfo.id).then(userData => {
+                const seve = JSON.parse(userData.data);
+                localStorage.setItem('seve', seve);
+                list=seve.list;
+                kategori_k=seve.listk;
+                kategori_kt=seve.listkt;
+                listc=seve.listc;
+                kategoris=seve.kategoris;
+                kategori_list=seve.kategori_list;
+                datetime=seve.datetime;
+                kateggori_id=seve.kateggori_id;
+                kateggori_ID_trash=seve.kateggori_ID_trash;
+                new_kateggori_id=seve.new_kateggori_id;
+                darkmode=seve.darkmode;
+            }).catch(error => {
+                console.error('ユーザーデータの取得に失敗しました', error);
+            });
         } else {
             console.log('ユーザーがログインしていません');
-            seve = JSON.parse(localStorage.getItem('seve'));
+            const seve = JSON.parse(localStorage.getItem('seve'));
+            list=seve.list;
+            kategori_k=seve.listk;
+            kategori_kt=seve.listkt;
+            listc=seve.listc;
+            kategoris=seve.kategoris;
+            kategori_list=seve.kategori_list;
+            datetime=seve.datetime;
+            kateggori_id=seve.kateggori_id;
+            kateggori_ID_trash=seve.kateggori_ID_trash;
+            new_kateggori_id=seve.new_kateggori_id;
+            darkmode=seve.darkmode;
         }
-
-        localStorage.setItem('seve', JSON.stringify(seve)); // ローカルストレージに保存
-        list = seve.list;
-        kategori_k = seve.listk;
-        kategori_kt = seve.listkt;
-        listc = seve.listc;
-        kategoris = seve.kategoris;
-        kategori_list = seve.kategori_list;
-        datetime = seve.datetime;
-        kateggori_id = seve.kateggori_id;
-        kateggori_ID_trash = seve.kateggori_ID_trash;
-        new_kateggori_id = seve.new_kateggori_id;
-        darkmode = seve.darkmode;
-
-    } catch (error) {
-        console.error('エラーが発生しました', error);
-    }
+    });
 }
-
 
 function reset() {
     list = [];
@@ -458,7 +458,7 @@ async function setting() {
     <input type="button" value="リセット" onclick="reset_button();" style="display: flex;">
     <p>アカウント</p>
     <p>${bb}</p>
-    <input type="button" value="サインアウト" onclick="signOutUser();load();setting();"><br>
+    <input type="button" value="サインアウト" onclick="signOutUser();location.reload(true);"><br>
     <input type="button" value="メールアドレス変更" onclick="mmm();"><br>
     <input type="button" value="パスワード変更" onclick="ppp();">
     <h1>インポート</h1>
