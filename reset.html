@@ -78,19 +78,19 @@ h1
     import { changePassword , setSupabaseSession} from './js/supabase.js';
     
         window.addEventListener('DOMContentLoaded', async () => {
-          const accessToken = getAccessTokenFromURL();
-          if (accessToken) {
-            await setSupabaseSession(accessToken);
-          }else
-          {
-            window.location.href = '/';
-          }
-        });
-    
-        function getAccessTokenFromURL() {
-          const urlParams = new URLSearchParams(window.location.search);
-          return urlParams.get('token');
-        }
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('token')) {
+      const accessToken = urlParams.get('token');
+      await setSupabaseSession(accessToken);
+    } else {
+      window.location.href = '/';
+    }
+  } catch (error) {
+    console.error('An error occurred:', error);
+    window.location.href = '/';
+  }
+});
     
         document.getElementById('set-password-form').addEventListener('submit', async (e) => {
           e.preventDefault();
