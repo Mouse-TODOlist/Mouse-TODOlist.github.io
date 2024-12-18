@@ -161,7 +161,9 @@ export async function getLoggedInUser() {
 
 export async function sendPasswordResetEmail(email) {
   try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email);
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: 'https://mouse-todolist.github.io/reset.html'
+      });
       if (error) {
           return { success: false, message: error.message };
       }
@@ -170,6 +172,7 @@ export async function sendPasswordResetEmail(email) {
       return { success: false, message: err.message };
   }
 }
+
 
 
 export async function changeEmail(newEmail) {
