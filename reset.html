@@ -84,7 +84,7 @@ h1
       const accessToken = urlParams.get('token');
       await setSupabaseSession(accessToken);
     } else {
-      window.location.href = '/';
+      //window.location.href = '/';
     }
   } catch (error) {
     console.error('An error occurred:', error);
