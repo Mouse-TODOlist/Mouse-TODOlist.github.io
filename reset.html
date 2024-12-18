@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>パスワードリセット</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+  <h1>パスワードリセット</h1>
+  <form id="set-password-form">
+    <input type="password" id="new-password" placeholder="新しいパスワードを入力してください" required />
+    <button type="submit">パスワード変更</button>
+  </form>
+  <div id="message"></div>
+
+  <script>
+    const SUPABASE_URL = 'https://fczbyxmfigvoiccknbim.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjemJ5eG1maWd2b2ljY2tuYmltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMzOTU5NDYsImV4cCI6MjA0ODk3MTk0Nn0.cHAk5toMTlEAw2FZCb8tSXgjzzFfldlWqJwnbyBh51k';
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    document.getElementById('set-password-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const newPassword = document.getElementById('new-password').value;
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword,
+      });
+      const message = document.getElementById('message');
+      if (error) {
+        message.textContent = `エラー: ${error.message}`;
+      } else {
+        message.textContent = 'パスワードを変更しました。';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ネズミTODOlist</title>
+    <script src="js/supabase.js" type="module"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="js/script.js"></script>
+    <link rel="icon" href="img/TODOlist_ico.jpg" alt="ネズミTODOlist">
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@100..900&family=Zen+Kurenaido&display=swap" rel="stylesheet">
+    <link rel="manifest" href="app.json">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=filter_alt" />
+</head>
+<body class="">
+    <noscript>
+        <div class="no">
+            <div class="window">
+                <p><label style="color: brown; background-color: rgb(168, 168, 168);">JavaScriptを使用できません</label><br>
+                    JavaScriptが無効化されている場合は有効化してください。<br>
+                    google Chromeを利用している場合は<code>chrome://settings/content/siteDetails?site=https://foyon4.sytes.net/mouse/js/TODOlist/</code>から<br>
+                    有効化できます。
+                    JavaScriptが使用できないブラウザの場合はブラウザを変更してください<br>
+                </p>
+            </div>
+        </div>
+    </noscript>
+    <div class="top">
+        <div class="uenonannka" id="uenonannka">
+            <h1 class="f"><img src="img/TODOlist_ico.jpg" class="img" alt="ねずみTODOlistのアイコン">ネズミTODOlist
+            </h1>
+            <div id="button" class="button">
+                <button class="btn_t" type="button" onclick="document.getElementById('tuika').style.display = 'block';document.getElementById('tuika').style.display = 'flex';"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>タスクを追加</button>
+                <button onclick="setting();"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z"/></svg>設定</button>
+                <button onclick="document.getElementById('windo').style.display = 'block';document.getElementById('windo').style.display = 'flex';"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M440-160q-17 0-28.5-11.5T400-200v-240L168-736q-15-20-4.5-42t36.5-22h560q26 0 36.5 22t-4.5 42L560-440v240q0 17-11.5 28.5T520-160h-80Zm40-308 198-252H282l198 252Zm0 0Z"/></svg>フィルター</button>
+            </div>
+            <input type="button" value="✕設定を閉じる" onclick="setting_close();"style="display:none;" id="setting">
+            <div >
+            </div>
+        </div>
+        <div class="pop_up_none" id="pop_up" style="">aaaaaaaa</div>
+    </div>
+    <div style="height:0;" id="offsetHeight"></div>
+    <div id="list" class=""></div>
+    <div class="tuika" id="tuika">
+        <div class="tuika_window">
+            内容<input type="text" id="t" placeholder="ここに内容を入力" >
+            <input type="button" value="入力をクリア" onclick="document.getElementById('t').value= '';" >
+            <br>カテゴリ
+            <select id="select" class="input" class="item" ></select>
+            <br>時間
+            <input type="datetime-local" id="datetime" value="" id="item">
+            <input type="button" value="入力をクリア" onclick="document.getElementById('datetime').value= '';" >
+            <br>
+            <div style="height: 180px;"></div>
+            <div>
+            <input value="追加" class="btn_t" type="button" onclick='indx();' id="item">
+            <br>
+            <input type="button" value="キャンセル" onclick='document.getElementById("tuika").style.display="none";' id="item">
+            </div>
+        </div>
+    </div>
+    <div class="tuika" id="windo">
+        <div class="window" id="windos">
+            <p><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M440-160q-17 0-28.5-11.5T400-200v-240L168-736q-15-20-4.5-42t36.5-22h560q26 0 36.5 22t-4.5 42L560-440v240q0 17-11.5 28.5T520-160h-80Zm40-308 198-252H282l198 252Zm0 0Z"/></svg>フィルター</p>
+            <li>チェックの状態で</li>
+            <select id="search"><option value="a">未完了</option><option value="b">完了</option><option value="c">全て表示</option></select>
+            <li>カテゴリーで</li>
+            <select id="select_search" class="input" class="item" multiple></select>
+            <li>並び替え</li>
+            <select id="sort"><option value="a">追加された順</option><option value="b">日付けが早い順</option></select>
+            <br>
+            <input type="button" onclick='document.getElementById("windo").style.display="none";' value="閉じる">
+        </div>
+    </div>
+    <div class="tuika" id="window">
+        <div class="window" id="windows">
+        </div>
+    </div>
+</body>
+</html>
