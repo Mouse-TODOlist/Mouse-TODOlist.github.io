@@ -5,33 +5,124 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>パスワードリセット</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #218838;
+        }
+        .uenonannka
+        {
+            width: 100%;
+            height: auto;
+            padding: 5px;
+            /*background: #4c4c4c;*/
+            background-color: #4c4c4c;
+            color: #ffffff;
+            border-radius: 15px;
+        }
+        .top
+        {
+            z-index: top;
+            height: auto;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+        .img {
+    height: 60px;
+    width: 60px;
+    border: 5px solid #000000;
+    clip-path: circle(30px at center);
+}
+h1
+{
+    background-color: rgb(131, 131, 131);
+}
+  </style>
+  <script type="module">
+    import { changePassword , setSupabaseSession} from './js/supabase.js';
+    
+        window.addEventListener('DOMContentLoaded', async () => {
+          const accessToken = getAccessTokenFromURL();
+          if (accessToken) {
+            await setSupabaseSession(accessToken);
+          }else
+          {
+            window.location.href = '/';
+          }
+        });
+    
+        function getAccessTokenFromURL() {
+          const urlParams = new URLSearchParams(window.location.search);
+          return urlParams.get('access_token');
+        }
+    
+        document.getElementById('set-password-form').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const newPassword = document.getElementById('new-password').value;
+          if (!newPassword) {
+            document.getElementById("message").innerHTML='新しいパスワードを入力してください。';
+            return;
+          }
+          if(changePassword(newPassword).success)
+          {
+            document.getElementById("message").innerHTML='パスワードを変更しました。';
+            window.location.href = '/';
+          }else{
+
+          }
+        });
+      </script>
 </head>
 <body>
-  <h1>パスワードリセット</h1>
+  <div class="top">
+    <div class="uenonannka" id="uenonannka">
+        <h1 class="f"><img src="img/TODOlist_ico.jpg" class="img" alt="ねずみTODOlistのアイコン">ネズミTODOlist
+        </h1>
+    </div>
+</div>
+<div class="form-container">
+  <p>パスワードリセット</p>
   <form id="set-password-form">
     <input type="password" id="new-password" placeholder="新しいパスワードを入力してください" required />
     <button type="submit">パスワード変更</button>
   </form>
   <div id="message"></div>
-
-  <script>
-    const SUPABASE_URL = 'https://fczbyxmfigvoiccknbim.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjemJ5eG1maWd2b2ljY2tuYmltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMzOTU5NDYsImV4cCI6MjA0ODk3MTk0Nn0.cHAk5toMTlEAw2FZCb8tSXgjzzFfldlWqJwnbyBh51k';
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    document.getElementById('set-password-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const newPassword = document.getElementById('new-password').value;
-      const { error } = await supabase.auth.updateUser({
-        password: newPassword,
-      });
-      const message = document.getElementById('message');
-      if (error) {
-        message.textContent = `エラー: ${error.message}`;
-      } else {
-        message.textContent = 'パスワードを変更しました。';
-      }
-    });
-  </script>
+</div>
 </body>
 </html>

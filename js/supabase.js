@@ -210,6 +210,18 @@ export async function changePassword(newPassword) {
   }
 }
 
+export async function setSupabaseSession(token) {
+  const { error } = await supabase.auth.setSession({
+    access_token: token,
+    refresh_token: token,
+  });
+  if (error) {
+    return{error:error.message, success:false};
+  } else {
+    return{success:true}
+  }
+}
+
 window.getUserData=getUserData;
 window.updateUserData=updateUserData;
 window.signOutUser=signOutUser;
