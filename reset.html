@@ -89,7 +89,7 @@ h1
     
         function getAccessTokenFromURL() {
           const urlParams = new URLSearchParams(window.location.search);
-          return urlParams.get('access_token');
+          return urlParams.get('token');
         }
     
         document.getElementById('set-password-form').addEventListener('submit', async (e) => {
