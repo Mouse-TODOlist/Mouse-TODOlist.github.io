@@ -458,7 +458,7 @@ async function setting() {
     <input type="button" value="リセット" onclick="reset_button();" style="display: flex;">
     <p>アカウント</p>
     <p>${bb}</p>
-    <input type="button" value="サインアウト" onclick="signOutUser();setting();"><br>
+    <input type="button" value="サインアウト" onclick="signOutUser();load();setting();"><br>
     <input type="button" value="メールアドレス変更" onclick="mmm();"><br>
     <input type="button" value="パスワード変更" onclick="ppp();">
     <h1>インポート</h1>
