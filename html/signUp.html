@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サインアップ</title>
+    <link rel="stylesheet" href="style/signUp.css">
+    <script type="module" src="js/signUp.js">
+    </script>
+</head>
+<body>
+    <div class="top">
+        <div class="uenonannka" id="uenonannka">
+            <h1 class="f"><img src="/img/TODOlist_ico.jpg" class="img" alt="ねずみTODOlistのアイコン">ネズミTODOlist
+            </h1>
+        </div>
+    </div>
+    <div class="form-container">
+        <h2>サインアップ</h2>
+        <form onsubmit="s(event)">
+            <label for="email">メールアドレス</label>
+            <input type="email" placeholder="メールアドレス" id="email" autocomplete="email" required>
+
+            <label for="password">パスワード</label>
+            <input type="password" placeholder="パスワード (6文字以上)" id="password" autocomplete="new-password" required>
+
+            <label for="confirm-password">パスワード確認</label>
+            <input type="password" placeholder="もう一度パスワードを入力してください" id="confirm-password" autocomplete="new-password" required>
+
+            <button type="submit">サインアップ</button>
+        </form>
+        <p id="m"></p>
+        <p style="text-align: center; margin-top: 10px;">
+            すでにアカウントをお持ちですか？ <a href="login.html">ログイン</a>
+        </p>
+    </div>
+</body>
+</html>

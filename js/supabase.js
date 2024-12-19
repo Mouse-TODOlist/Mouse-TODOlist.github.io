@@ -161,9 +161,7 @@ export async function getLoggedInUser() {
 
 export async function sendPasswordResetEmail(email) {
   try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-          redirectTo: 'https://mouse-todolist.github.io/reset.html'
-      });
+      const { error } = await supabase.auth.resetPasswordForEmail(email);
       if (error) {
           return { success: false, message: error.message };
       }
@@ -172,7 +170,6 @@ export async function sendPasswordResetEmail(email) {
       return { success: false, message: err.message };
   }
 }
-
 
 
 export async function changeEmail(newEmail) {
@@ -223,6 +220,34 @@ export async function setSupabaseSession(token) {
   } else {
     return{success:true}
   }
+}
+
+export async function confirmAndDeleteAccount(email, password) {
+  if (!email || !password) {
+    return { success: false, message: 'メールアドレスとパスワードを入力してください。' };
+  }
+  const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+    email: email,
+    password: password,
+  });
+  if (signInError) {
+    return { success: false, message: 'メールアドレスまたはパスワードが間違っています。' };
+  }
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  if (userError || !user) {
+    return { success: false, message: 'ログイン中のユーザー情報が取得できません。' };
+  }
+  if (user.email !== email) {
+    return { success: false, message: '入力されたメールアドレスが現在のアカウントと一致しません。' };
+  }
+  const { error: deleteError } = await supabase
+    .from('auth.users')
+    .delete()
+    .eq('user_id', user.id);
+  if (deleteError) {
+    return { success: false, message: `アカウント削除に失敗しました: ${deleteError.message}` };
+  }
+  return { success: true, message: 'アカウントが正常に削除されました。' };
 }
 
 window.getUserData=getUserData;

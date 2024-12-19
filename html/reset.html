@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>パスワードリセット</title>
+  <link rel="stylesheet" href="style/reset.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script type="module" src="js/reset.js">
+      </script>
+</head>
+<body>
+  <div class="top">
+    <div class="uenonannka" id="uenonannka">
+        <h1 class="f"><img src="/img/TODOlist_ico.jpg" class="img" alt="ねずみTODOlistのアイコン">ネズミTODOlist
+        </h1>
+    </div>
+</div>
+<div class="form-container">
+  <p>パスワードリセット</p>
+  <form id="set-password-form">
+    <input type="password" id="new-password" placeholder="新しいパスワードを入力してください" required />
+    <button type="submit">パスワード変更</button>
+  </form>
+  <div id="message"></div>
+</div>
+</body>
+</html>

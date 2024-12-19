@@ -9,6 +9,8 @@ var kateggori_id=[]
 var kateggori_ID_trash=[]
 var new_kateggori_id;
 var darkmode="";
+var online=true;
+var login=false;
 var a;
 var b;
 const urlParams = new URLSearchParams(window.location.search);
@@ -17,12 +19,19 @@ window.onload = () => {
     requestNotificationPermission();
     
     window.addEventListener('online', () => {
+        online=true;
         pop_up("#fff","#00ff00",'オンラインになりました');
     });
     
     window.addEventListener('offline', () => {
+        online=false;
         pop_up("#fff","#ff0000",'オフラインになりました');
     });
+    if (navigator.onLine) {
+        online=true;
+      } else {
+        online=false;
+      }
     document.getElementById("tuika").style.display="none";
     if (localStorage.getItem('seve') == null) {
         windows(`<h1 class="f" style="color: black;"><img src="img/TODOlist_ico.jpg" class="img" alt="ねずみTODOlistのアイコン">ネズミTODOlist<br>へようこそ</h1><br><a href="user-terms-privacy.html">利用規約/プライバシーポリシー</a><input type="button" value="閉じる" onclick='windows_close();'>`);
@@ -30,7 +39,18 @@ window.onload = () => {
         seve();
     }
     (async () => {
+        if (navigator.onLine) {
+            const userInfo = await getLoggedInUser();
+            if(userInfo)
+            {
+                localStorage.setItem("isLoggedIn", "true");
+            }else
+            {
+                localStorage.setItem("isLoggedIn", "false");
+            }
+          }
     await load();
+    await seve();
     drawing();
 
     const selectElement = document.getElementById('select_search');
@@ -63,7 +83,7 @@ function sanitize(input) {
     return input.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\//g, "&#x2F;");
 }
 
-function seve() {
+async function seve() {
     const seve=JSON.stringify
     ({
         list:list,
@@ -79,24 +99,32 @@ function seve() {
         darkmode:darkmode,
     })
     localStorage.setItem('seve', seve);
-    getLoggedInUser().then(userInfo => {
-        if (userInfo) {
-            updateUserData(userInfo.id,seve)
-        } else {
+    if(online)
+    {
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        const userInfo = await getLoggedInUser();
+        if(isLoggedIn)
+        {
+            updateUserData(userInfo.id,seve);
         }
-      });
+    }
 }
 
 async function load() {
     try {
-        const userInfo = await getLoggedInUser();
         let seve;
-
-        if (userInfo) {
-            const userData = await getUserData(userInfo.id);
-            seve = JSON.parse(userData.data);
-        } else {
-            console.log('ユーザーがログインしていません');
+        if(online)
+        {
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            if (isLoggedIn) {
+                const userInfo = await getLoggedInUser();
+                const userData = await getUserData(userInfo.id);
+                seve = JSON.parse(userData.data);
+            } else {
+                seve = JSON.parse(localStorage.getItem('seve'));
+            }
+        }else
+        {
             seve = JSON.parse(localStorage.getItem('seve'));
         }
 
@@ -439,6 +467,7 @@ async function setting() {
     const divElement = document.getElementById('uenonannka');
     const targetElement = document.getElementById("offsetHeight");
     targetElement.style.height = `${divElement.offsetHeight}px`;
+    if(online){
     await getLoggedInUser().then(userInfo => {
         if (userInfo) {
             const bb = userInfo.email;
@@ -490,7 +519,7 @@ async function setting() {
     <input type="button" value="リセット" onclick="reset_button();" style="display: flex;">
     <p>アカウント</p>
     <p>${bb}</p>
-    <input value="ログイン" onclick="window.location.href = 'login.html';" type="button"><input type="button" value="サインアップ" onclick="window.location.href = 'signUp.html';">
+    <input value="ログイン" onclick="window.location.href = 'html/login.html';" type="button"><input type="button" value="サインアップ" onclick="window.location.href = 'html/signUp.html';">
     <h1>インポート</h1>
     <form id="importForm" style="padding: 5px;" class="form">
     <label for="file">データファイルをインポート:</label>
@@ -503,8 +532,47 @@ async function setting() {
 </form>
 <a href="user-terms-privacy.html">利用規約/プライバシーポリシー</a>`;
         }
-        kategorig();
-      });
+    });
+}else
+{
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    if(isLoggedIn)
+    {
+        var ll="オフライン　ログインしていました。"
+    }else
+    {
+        var ll="オフライン　ログインしていませんでした。"
+    }
+    const bb = "ログインしていません";
+            document.getElementById('list').innerHTML = `
+    <h1>設定</h1><br>
+    <button onclick="shareButton();">
+    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="M680-80q-50 0-85-35t-35-85q0-6 3-28L282-392q-16 15-37 23.5t-45 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q24 0 45 8.5t37 23.5l281-164q-2-7-2.5-13.5T560-760q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-24 0-45-8.5T598-672L317-508q2 7 2.5 13.5t.5 14.5q0 8-.5 14.5T317-452l281 164q16-15 37-23.5t45-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T720-200q0-17-11.5-28.5T680-240q-17 0-28.5 11.5T640-200q0 17 11.5 28.5T680-160ZM200-440q17 0 28.5-11.5T240-480q0-17-11.5-28.5T200-520q-17 0-28.5 11.5T160-480q0 17 11.5 28.5T200-440Zm480-280q17 0 28.5-11.5T720-760q0-17-11.5-28.5T680-800q-17 0-28.5 11.5T640-760q0 17 11.5 28.5T680-720Zm0 520ZM200-480Zm480-280Z"/></svg>
+    ネズミTODOlistを共有する
+  </button>
+  <p>デザイン</p>
+    <button id="toggle-btn" onclick="toggleMode();">ダークモード切替</button>
+    <p>カテゴリ</p>
+    <div class="t" id="kateggori">
+    <input type="button" value="追加 +" onclick="kategoriss();kategori();">
+    </div>
+    <br>
+    <input type="button" value="リセット" onclick="reset_button();" style="display: flex;">
+    <p>アカウント</p>
+    <p>${ll}</p>
+    <h1>インポート</h1>
+    <form id="importForm" style="padding: 5px;" class="form">
+    <label for="file">データファイルをインポート:</label>
+    <input type="file" id="file" accept=".json"><br><br>
+    <button type="button" class="btn" onclick="importJSON()">インポート</button>
+</form>
+<h1>エクスポート</h1>
+<form id="exportForm" style="padding: 5px;" class="form">
+    <button type="button" class="btn" onclick="exportJSON()">JSONエクスポート</button>
+</form>
+<a href="user-terms-privacy.html">利用規約/プライバシーポリシー</a>`;
+}
+kategorig();
       document.getElementById('list').classList.remove("list");
     document.getElementById('button').style.display="none";
     document.getElementById('setting').style.display = 'block';

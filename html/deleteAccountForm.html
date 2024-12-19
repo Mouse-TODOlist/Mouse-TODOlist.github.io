@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アカウント削除</title>
+  <link rel="stylesheet" href="style/login.css">
+  <script type="module" src="js/deleteAccountForm.js"></script>
+</head>
+<body>
+  <div class="top">
+    <div class="uenonannka" id="uenonannka">
+        <h1 class="f"><img src="/img/TODOlist_ico.jpg" class="img" alt="ねずみTODOlistのアイコン">ネズミTODOlist
+        </h1>
+    </div>
+</div>
+<div class="form-container">
+    <form id="delete-account-form">
+        <h2>アカウント削除</h2>
+        <label for="email">メールアドレス:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="password">パスワード:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">削除</button>
+      </form>
+      <p id="result-message"></p>
+</div>
+</body>
+</html>

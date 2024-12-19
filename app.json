@@ -2,12 +2,12 @@
     "name": "ネズミTODOlist",
     "short_name": "ネズミTODOlist",
     "description": "ネズミTODOlistというタスク管理ツールです。",
-    "start_url": "/",
+    "start_url": "/mouse/js/TODOlist",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000",
     "lang": "ja",
-    "scope": "/",
+    "scope": "/mouse/js/TODOlist",
     "prefer_related_applications": true,  
     "icons": [
       {
