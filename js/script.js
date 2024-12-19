@@ -15,7 +15,6 @@ var a;
 var b;
 const urlParams = new URLSearchParams(window.location.search);
 window.onload = () => {
-    for(let i=0;i<2;i++){
     requestNotificationPermission();
     
     window.addEventListener('online', () => {
@@ -77,7 +76,6 @@ window.onload = () => {
             console.log('Service Worker登録成功チュー！');
         });
     }
-}
 }
 function sanitize(input) {
     return input.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\//g, "&#x2F;");
