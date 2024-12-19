@@ -73,7 +73,6 @@ window.onload = () => {
 })();
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('js/sw.js').then(() => {
-            console.log('Service Worker登録成功チュー！');
         });
     }
 }
@@ -147,16 +146,13 @@ async function load() {
 
 function reset() {
     list = [];
-console.log(list);
     listc = [];
-    console.log(listc);
     kategori_k = ["#afafaf"];
     kategori_kt = ["#000000"];
     kategoris = [];
     kategori_list = ["通常"];
     datetime=[];
     kateggori_id=[1];
-    console.log(kateggori_id);
     kateggori_ID_trash=[];
     new_kateggori_id=1;
     darkmode="";
@@ -191,7 +187,6 @@ function drawing() {
     document.getElementById('select').value=b;
     const selectedOptions = document.getElementById('select_search').selectedOptions;
     const select_search = Array.from(selectedOptions).map(option => option.value);
-    console.log(select_search);
     a='<option value="s">すべてのカテゴリー</option>';
     for (let i = 0; i < kategori_list.length; i++)
     {
@@ -259,7 +254,6 @@ return;
         var kari;
         let x;
         const abc=getSortedIndices(datetime)
-        console.log(abc);
         kari = new Date(datetime[abc[0]]).toLocaleDateString('ja-JP');
         a += `<h1>${kari}</h1>`;
         for (let i = 0; i < list.length; i++)
@@ -312,11 +306,9 @@ return;
             aaa++;
             break;
     }
-    console.log(document.getElementById('select_search').value === "s");
 if (document.getElementById('select_search').value === "s") {
 } else {
     a=0;
-    console.log(select_search);
     for (let i = 0; i < kategoris.length; i++) {
         const excludeItems = select_search
         if (!excludeItems.includes(kategoris[i])) {
@@ -541,7 +533,6 @@ async function setting() {
     {
         var ll="オフライン　ログインしていませんでした。"
     }
-    const bb = "ログインしていません";
             document.getElementById('list').innerHTML = `
     <h1>設定</h1><br>
     <button onclick="shareButton();">
@@ -809,4 +800,4 @@ function toggleMode() {
       toggleButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Zm0-80q88 0 158-48.5T740-375q-20 5-40 8t-40 3q-123 0-209.5-86.5T364-660q0-20 3-40t8-40q-78 32-126.5 102T200-480q0 116 82 198t198 82Zm-10-270Z"/></svg>ダークモード切替';
     }
     seve();
-  }//40日
+  }
