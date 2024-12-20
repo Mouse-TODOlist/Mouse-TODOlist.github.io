@@ -58,22 +58,13 @@ window.onload = () => {
             darkmode = sseve.darkmode;
            await seve();
         }
-        if (navigator.onLine) {
-            const userInfo = await getLoggedInUser();
-            if(userInfo)
-            {
-                localStorage.setItem("isLoggedIn", "true");
-            }else
-            {
-                localStorage.setItem("isLoggedIn", "false");
-            }
-          }
+    await islogin();
     await load();
-    drawing();
         if (darkmode === 'enabled') {
         const body = document.body;
         body.classList.add('dark-mode');
     }
+    drawing();
 
     const selectElement = document.getElementById('select_search');
     selectElement.selectedIndex = 0;
@@ -99,6 +90,19 @@ window.onload = () => {
         });
     }
 }
+async function islogin()
+{
+    if (navigator.onLine) {
+        const userInfo = await getLoggedInUser();
+        if(userInfo)
+        {
+            localStorage.setItem("isLoggedIn", "true");
+        }else
+        {
+            localStorage.setItem("isLoggedIn", "false");
+        }
+      }
+}
 function sanitize(input) {
     return input.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\//g, "&#x2F;");
 }
@@ -106,6 +110,7 @@ function sanitize(input) {
 async function seve() {
     document.getElementById("situation").src="img/Mouse.png";
     document.getElementById('situation').classList.add("rotating");
+    await islogin();
     try{
     const seve=JSON.stringify
     ({
@@ -159,6 +164,7 @@ if (navigator.onLine) {
 async function load() {
     document.getElementById("situation").src="img/Mouse.png";
     document.getElementById('situation').classList.add("rotating");
+    await islogin();
     try {
         let seve;
         if(online)
