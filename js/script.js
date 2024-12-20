@@ -43,20 +43,19 @@ window.onload = () => {
         const issaverequired = localStorage.getItem("issaverequired") === "true";
         if (issaverequired)
         {
-             let seve;
             localStorage.setItem("issaverequired", "false");
-            seve = JSON.parse(localStorage.getItem('seve'));
-            list = seve.list;
-            kategori_k = seve.listk;
-            kategori_kt = seve.listkt;
-            listc = seve.listc;
-            kategoris = seve.kategoris;
-            kategori_list = seve.kategori_list;
-            datetime = seve.datetime;
-            kateggori_id = seve.kateggori_id;
-            kateggori_ID_trash = seve.kateggori_ID_trash;
-            new_kateggori_id = seve.new_kateggori_id;
-            darkmode = seve.darkmode;
+            const sseve = JSON.parse(localStorage.getItem('seve'));
+            list = sseve.list;
+            kategori_k = sseve.listk;
+            kategori_kt = sseve.listkt;
+            listc = sseve.listc;
+            kategoris = sseve.kategoris;
+            kategori_list = sseve.kategori_list;
+            datetime = sseve.datetime;
+            kateggori_id = sseve.kateggori_id;
+            kateggori_ID_trash = sseve.kateggori_ID_trash;
+            new_kateggori_id = sseve.new_kateggori_id;
+            darkmode = sseve.darkmode;
            await seve();
         }
         if (navigator.onLine) {
@@ -140,6 +139,7 @@ async function seve() {
     }
 } catch (error) {
     console.error('エラーが発生しました', error);
+    document.getElementById('situation').classList.remove("rotating");
         document.getElementById("situation").src="img/Mouse_ loss.png";
         return;
 }
@@ -147,6 +147,7 @@ if (navigator.onLine) {
     document.getElementById('situation').classList.remove("rotating");
     document.getElementById("situation").src="img/Mouse_check.png";
       } else {
+        document.getElementById('situation').classList.remove("rotating");
         document.getElementById("situation").src="img/Mouse_offline.png";
       }
 }
@@ -186,6 +187,7 @@ async function load() {
 
     } catch (error) {
         console.error('エラーが発生しました', error);
+        document.getElementById('situation').classList.remove("rotating");
         document.getElementById("situation").src="img/Mouse_ loss.png";
         return;
     }
@@ -193,6 +195,7 @@ async function load() {
     document.getElementById('situation').classList.remove("rotating");
     document.getElementById("situation").src="img/Mouse_check.png";
       } else {
+        document.getElementById('situation').classList.remove("rotating");
         document.getElementById("situation").src="img/Mouse_offline.png";
       }
 }
@@ -509,6 +512,8 @@ function ppp()
 }
 
 async function setting() {
+    document.getElementById("situation").src="img/Mouse.png";
+    document.getElementById('situation').classList.add("rotating");
     const divElement = document.getElementById('uenonannka');
     const targetElement = document.getElementById("offsetHeight");
     targetElement.style.height = `${divElement.offsetHeight}px`;
@@ -578,6 +583,8 @@ async function setting() {
 <a href="user-terms-privacy.html">利用規約/プライバシーポリシー</a>`;
         }
     });
+    document.getElementById('situation').classList.remove("rotating");
+    document.getElementById("situation").src="img/Mouse_check.png";
 }else
 {
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
@@ -615,6 +622,8 @@ async function setting() {
     <button type="button" class="btn" onclick="exportJSON()">JSONエクスポート</button>
 </form>
 <a href="user-terms-privacy.html">利用規約/プライバシーポリシー</a>`;
+document.getElementById('situation').classList.remove("rotating");
+document.getElementById("situation").src="img/Mouse_offline.png";
 }
 kategorig();
       document.getElementById('list').classList.remove("list");
