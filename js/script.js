@@ -115,8 +115,12 @@ async function seve() {
         document.getElementById("situation").src="img/Mouse_ loss.png";
         return;
 }
-document.getElementById('situation').classList.remove("rotating");
+if (navigator.onLine) {
+    document.getElementById('situation').classList.remove("rotating");
     document.getElementById("situation").src="img/Mouse_check.png";
+      } else {
+        document.getElementById("situation").src="img/Mouse_offline.png";
+      }
 }
 
 async function load() {
@@ -157,8 +161,12 @@ async function load() {
         document.getElementById("situation").src="img/Mouse_ loss.png";
         return;
     }
+    if (navigator.onLine) {
     document.getElementById('situation').classList.remove("rotating");
     document.getElementById("situation").src="img/Mouse_check.png";
+      } else {
+        document.getElementById("situation").src="img/Mouse_offline.png";
+      }
 }
 
 
