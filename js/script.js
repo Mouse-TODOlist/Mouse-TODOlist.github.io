@@ -583,7 +583,7 @@ async function shareButton()
           await navigator.share({
             title: 'ネズミTODOlist',
             text: 'シンプルなタスク管理ツールです。',
-            url: "https://foyon4.sytes.net/mouse/js/TODOlist/",
+            url: "https://mouse-todolist.github.io",
           });
           pop_up("#000","#00ff00",'共有ありがとうございます。');
         } catch (err) {
