@@ -70,6 +70,10 @@ window.onload = () => {
           }
     await load();
     drawing();
+        if (darkmode === 'enabled') {
+        const body = document.body;
+        body.classList.add('dark-mode');
+    }
 
     const selectElement = document.getElementById('select_search');
     selectElement.selectedIndex = 0;
