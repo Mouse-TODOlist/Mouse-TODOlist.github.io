@@ -15,6 +15,7 @@ var a;
 var b;
 const urlParams = new URLSearchParams(window.location.search);
 window.onload = () => {
+    localStorage.setItem("issaverequired", "true");
     requestNotificationPermission();
     
     window.addEventListener('online', () => {
@@ -40,6 +41,11 @@ window.onload = () => {
         seve();
     }
     (async () => {
+        const issaverequired = localStorage.getItem("issaverequired") === "true";
+        if (issaverequired)
+        {
+           await seve();
+        }
         if (navigator.onLine) {
             const userInfo = await getLoggedInUser();
             if(userInfo)
@@ -51,7 +57,6 @@ window.onload = () => {
             }
           }
     await load();
-    await seve();
     drawing();
 
     const selectElement = document.getElementById('select_search');
@@ -108,6 +113,16 @@ async function seve() {
         if(isLoggedIn)
         {
             updateUserData(userInfo.id,seve);
+        }
+    } else
+    {
+        const issaverequired = localStorage.getItem("isLoggedIn") === "true";
+        if(issaverequired)
+        {
+        localStorage.setItem("issaverequired", "true");
+        }else
+        {
+        localStorage.setItem("issaverequired", "false");
         }
     }
 } catch (error) {
