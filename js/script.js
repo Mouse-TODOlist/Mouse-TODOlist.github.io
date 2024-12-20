@@ -44,6 +44,18 @@ window.onload = () => {
         if (issaverequired)
         {
             localStorage.setItem("issaverequired", "false");
+            seve = JSON.parse(localStorage.getItem('seve'));
+            list = seve.list;
+            kategori_k = seve.listk;
+            kategori_kt = seve.listkt;
+            listc = seve.listc;
+            kategoris = seve.kategoris;
+            kategori_list = seve.kategori_list;
+            datetime = seve.datetime;
+            kateggori_id = seve.kateggori_id;
+            kateggori_ID_trash = seve.kateggori_ID_trash;
+            new_kateggori_id = seve.new_kateggori_id;
+            darkmode = seve.darkmode;
            await seve();
         }
         if (navigator.onLine) {
