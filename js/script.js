@@ -15,7 +15,6 @@ var a;
 var b;
 const urlParams = new URLSearchParams(window.location.search);
 window.onload = () => {
-    localStorage.setItem("issaverequired", "false");
     requestNotificationPermission();
     
     window.addEventListener('online', () => {
@@ -44,6 +43,7 @@ window.onload = () => {
         const issaverequired = localStorage.getItem("issaverequired") === "true";
         if (issaverequired)
         {
+            localStorage.setItem("issaverequired", "false");
            await seve();
         }
         if (navigator.onLine) {
@@ -186,6 +186,7 @@ async function load() {
 
 
 function reset() {
+    localStorage.setItem("issaverequired", "false");
     list = [];
     listc = [];
     kategori_k = ["#afafaf"];
