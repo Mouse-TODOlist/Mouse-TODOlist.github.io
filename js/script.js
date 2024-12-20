@@ -25,11 +25,13 @@ window.onload = () => {
     window.addEventListener('offline', () => {
         online=false;
         pop_up("#fff","#ff0000",'オフラインになりました');
+        document.getElementById("situation").src="img/Mouse_offline.png";
     });
     if (navigator.onLine) {
         online=true;
       } else {
         online=false;
+        document.getElementById("situation").src="img/Mouse_offline.png";
       }
     document.getElementById("tuika").style.display="none";
     if (localStorage.getItem('seve') == null) {
@@ -81,6 +83,9 @@ function sanitize(input) {
 }
 
 async function seve() {
+    document.getElementById("situation").src="img/Mouse.png";
+    document.getElementById('situation').classList.add("rotating");
+    try{
     const seve=JSON.stringify
     ({
         list:list,
@@ -105,9 +110,18 @@ async function seve() {
             updateUserData(userInfo.id,seve);
         }
     }
+} catch (error) {
+    console.error('エラーが発生しました', error);
+        document.getElementById("situation").src="img/Mouse_ loss.png";
+        return;
+}
+document.getElementById('situation').classList.remove("rotating");
+    document.getElementById("situation").src="img/Mouse_check.png";
 }
 
 async function load() {
+    document.getElementById("situation").src="img/Mouse.png";
+    document.getElementById('situation').classList.add("rotating");
     try {
         let seve;
         if(online)
@@ -140,7 +154,11 @@ async function load() {
 
     } catch (error) {
         console.error('エラーが発生しました', error);
+        document.getElementById("situation").src="img/Mouse_ loss.png";
+        return;
     }
+    document.getElementById('situation').classList.remove("rotating");
+    document.getElementById("situation").src="img/Mouse_check.png";
 }
 
 
@@ -583,7 +601,7 @@ async function shareButton()
           await navigator.share({
             title: 'ネズミTODOlist',
             text: 'シンプルなタスク管理ツールです。',
-            url: "https://mouse-todolist.github.io",
+            url: "https://foyon4.sytes.net/mouse/js/TODOlist/",
           });
           pop_up("#000","#00ff00",'共有ありがとうございます。');
         } catch (err) {
@@ -800,4 +818,4 @@ function toggleMode() {
       toggleButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Zm0-80q88 0 158-48.5T740-375q-20 5-40 8t-40 3q-123 0-209.5-86.5T364-660q0-20 3-40t8-40q-78 32-126.5 102T200-480q0 116 82 198t198 82Zm-10-270Z"/></svg>ダークモード切替';
     }
     seve();
-  }
+  }//40日
