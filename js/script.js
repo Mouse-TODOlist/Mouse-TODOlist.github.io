@@ -15,7 +15,7 @@ var a;
 var b;
 const urlParams = new URLSearchParams(window.location.search);
 window.onload = () => {
-    localStorage.setItem("issaverequired", "true");
+    localStorage.setItem("issaverequired", "false");
     requestNotificationPermission();
     
     window.addEventListener('online', () => {
