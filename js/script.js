@@ -43,6 +43,7 @@ window.onload = () => {
         const issaverequired = localStorage.getItem("issaverequired") === "true";
         if (issaverequired)
         {
+             let seve;
             localStorage.setItem("issaverequired", "false");
             seve = JSON.parse(localStorage.getItem('seve'));
             list = seve.list;
