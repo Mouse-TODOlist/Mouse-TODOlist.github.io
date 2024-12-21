@@ -60,6 +60,19 @@ window.onload = () => {
         seve();
     }
     (async () => {
+        await islogin();
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        if(isLoggedIn)
+        {
+        const userInfo = await getLoggedInUser();
+        const userData = await getUserData(userInfo.id);
+        if(Object.keys(userData.data).length === 0)
+            {
+                windows(`<p>ネズミアカウントにサインアップありがとうございます。</p><input type="button" value="OK" onclick='windows_close();'>`);
+                reset();
+                await seve();
+            }
+        }
         const issaverequired = localStorage.getItem("issaverequired") === "true";
         if (issaverequired)
         {
@@ -78,7 +91,6 @@ window.onload = () => {
             darkmode = sseve.darkmode;
            await seve();
         }
-    await islogin();
     await load();
         if (darkmode === 'enabled') {
         const body = document.body;
@@ -110,6 +122,13 @@ window.onload = () => {
         });
     }
 }
+
+async function reload()
+{
+    await load();
+    drawing();
+}
+
 async function islogin()
 {
     if (navigator.onLine) {
@@ -329,8 +348,7 @@ return;
         a = a + `<div class="content" id="${i}" style="background-color:${kategori_k[x]};color:${kategori_kt[x]};">
             ${i + 1}${"  カテゴリ:"+kategori_list[x]}
             <div id="time${i}"></div>
-            <p style="color:${kategori_kt[x]};">${list[i]}
-            <input type="checkbox" id="check${i}" onclick="check(${i});">
+            <p style="color:${kategori_kt[x]};">${list[i]}<input type="checkbox" id="check${i}" onclick="check(${i});">
             </p>
             <input type="button" onclick="removeItem(${i});" value="削除" class="s">
             <input type="button" value="編集"onclick="edit(${i});" >
@@ -361,9 +379,8 @@ return;
         a = a + `<div class="content" id="${abc[i]}" style="background-color:${kategori_k[x]};color:${kategori_kt[x]};">
         ${abc[i] + 1}${"  カテゴリ:"+kategori_list[x]}
         <div id="time${abc[i]}"></div>
-        <p style="color:${kategori_kt[x]};">${list[abc[i]]}
-        <input type="checkbox" id="check${abc[i]}" onclick="check(${abc[i]});">
-            </p>
+        <p style="color:${kategori_kt[x]};">${list[abc[i]]}<input type="checkbox" id="check${abc[i]}" onclick="check(${abc[i]});">
+        </p>
             <input type="button" onclick="removeItem(${abc[i]});" value="削除" class="s">
             <input type="button" value="編集"onclick="edit(${abc[i]});" >
             </div>
@@ -538,7 +555,15 @@ function mmm()
 
 function ppp()
 {
-    windows(`<P>メールアドレス変更</P><br><input type="password" id="mm"><input type="button" value="変更" onclick="changePassword(document.getElementById('mm').value);"><input type="button" value="キャンセル" onclick="windows_close()">`);
+    windows(`<P>パスワード変更</P><br><input type="password" id="mm"><input type="button" value="変更" onclick="changePassword(document.getElementById('mm').value);"><input type="button" value="キャンセル" onclick="windows_close()">`);
+}
+
+async function signOut()
+{
+    await signOutUser();
+    await load();
+    await setting();
+    window.location.reload();
 }
 
 async function setting() {
@@ -567,7 +592,7 @@ async function setting() {
     <input type="button" value="リセット" onclick="reset_button();" style="display: flex;">
     <p>アカウント</p>
     <p>${bb}</p>
-    <input type="button" value="サインアウト" onclick="signOutUser();load();setting();"><br>
+    <input type="button" value="サインアウト" onclick="signOut();"><br>
     <input type="button" value="メールアドレス変更" onclick="mmm();"><br>
     <input type="button" value="パスワード変更" onclick="ppp();">
     <h1>インポート</h1>
@@ -837,6 +862,8 @@ async function pop_up(c,bc,t)
 }
 
 window.onerror = function (message, source, lineno, colno, error) {
+    document.getElementById('situation').classList.remove("rotating");
+    document.getElementById("situation").src="img/Mouse_ loss.png";
     const params = new URLSearchParams(window.location.search);
 
     if (params.has('debug')) {

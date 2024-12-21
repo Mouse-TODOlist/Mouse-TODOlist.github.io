@@ -173,7 +173,7 @@ button.input:hover {
     color: #fff;
 }
 
-input[type="text"] {
+input[type="text"],input[type="password"],input[type="email"] {
     padding: 12px 20px;
     border: 2px solid #ddd;
     border-radius: 15px;
@@ -181,12 +181,12 @@ input[type="text"] {
     transition: all 0.3s ease;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus,input[type="password"]:focus,input[type="email"]:focus {
     border-color: #4a90e2;
     background-color: #f9f9f9;
 }
 
-body.dark-mode input[type="text"]:focus {
+body.dark-mode input[type="text"]:focus,input[type="password"]:focus,input[type="email"]:focus {
     background-color: #121212;
     color: #ffffff;
 }
