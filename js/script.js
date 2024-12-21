@@ -20,6 +20,26 @@ window.onload = () => {
     window.addEventListener('online', () => {
         online=true;
         pop_up("#fff","#00ff00",'オンラインになりました');
+            (async () => {
+                const issaverequired = localStorage.getItem("issaverequired") === "true";
+        if (issaverequired)
+        {
+            localStorage.setItem("issaverequired", "false");
+            const sseve = JSON.parse(localStorage.getItem('seve'));
+            list = sseve.list;
+            kategori_k = sseve.listk;
+            kategori_kt = sseve.listkt;
+            listc = sseve.listc;
+            kategoris = sseve.kategoris;
+            kategori_list = sseve.kategori_list;
+            datetime = sseve.datetime;
+            kateggori_id = sseve.kateggori_id;
+            kateggori_ID_trash = sseve.kateggori_ID_trash;
+            new_kateggori_id = sseve.new_kateggori_id;
+            darkmode = sseve.darkmode;
+           await seve();
+        }
+    })();
     });
     
     window.addEventListener('offline', () => {
